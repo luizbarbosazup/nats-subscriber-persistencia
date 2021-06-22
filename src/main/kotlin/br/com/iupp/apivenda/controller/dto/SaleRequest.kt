@@ -6,5 +6,5 @@ import javax.validation.constraints.Positive
 
 @Introspected
 data class SaleRequest (
-    val productId:UUID,
-    @field:Positive val qty:Double)
+    val productId:UUID?,
+    @field:Positive val qty:Double?)

@@ -10,7 +10,7 @@ class Mapper {
 
     companion object{
         fun toSaleEntity(saleRequest: SaleRequest)=
-            SaleEntity(saleRequest.productId,saleRequest.qty)
+            SaleEntity(saleRequest.productId!!,saleRequest.qty!!)
 
         fun toSaleRequest(saleEntity: SaleEntity)=
              SaleRequest(saleEntity.productId,saleEntity.qty)

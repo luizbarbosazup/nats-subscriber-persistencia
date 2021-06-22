@@ -11,22 +11,22 @@ import javax.inject.Singleton
 @Singleton
 class SaleRepositoryImpl(val cqlSession: CqlSession):SaleRepository {
 
-    private fun verifyExistsProduct(productId:UUID):Boolean{
-
-        var result:ResultSet = cqlSession.execute(
-            SimpleStatement
-                .newInstance("SELECT * FROM pdvdata.product WHERE id = ?", productId)
-        )
-
-        val isProduct: Row? = result.one()
-        if (isProduct != null) {
-            println("PRODUTO ENCONTRADO : CÓDIGO ${isProduct.getUuid("id")} DESCRICAO : ${isProduct.getString("name")}")
-            return  true
-        }
-        println("ATENÇÃO : PRODUTO NÃO ENCONTRADO. VENDA CANCELADA")
-        return false
-
-    }
+//    private fun verifyExistsProduct(productId:UUID):Boolean{
+//
+//        var result:ResultSet = cqlSession.execute(
+//            SimpleStatement
+//                .newInstance("SELECT * FROM pdvdata.product WHERE id = ?", productId)
+//        )
+//
+//        val isProduct: Row? = result.one()
+//        if (isProduct != null) {
+//            println("PRODUTO ENCONTRADO : CÓDIGO ${isProduct.getUuid("id")} DESCRICAO : ${isProduct.getString("name")}")
+//            return  true
+//        }
+//        println("ATENÇÃO : PRODUTO NÃO ENCONTRADO. VENDA CANCELADA")
+//        return false
+//
+//    }
 
     override fun saveSale(saleEntity: SaleEntity) {
 
@@ -44,5 +44,13 @@ class SaleRepositoryImpl(val cqlSession: CqlSession):SaleRepository {
                 )
         )
         println("VENDA EFETUADA!!!")
+    }
+
+    override fun deleteSale(saleId: UUID) {
+        cqlSession.execute(
+            SimpleStatement
+                .newInstance("DELETE from pdvdata.sale where id = ?", saleId)
+        )
+        println("VENDA ${ saleId } EXCLUÍDA!!!")
     }
 }
